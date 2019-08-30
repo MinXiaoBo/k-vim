@@ -1,10 +1,6 @@
 "==========================================
-" Author:  wklken
+" Author:  xiaobo
 " Version: 9.1
-" Email: wklken@yeah.net
-" BlogPost: http://www.wklken.me
-" ReadMe: README.md
-" Donation: http://www.wklken.me/pages/donation.html
 " Last_modify: 2015-12-15
 " Sections:
 "       -> Initial Plugin 加载插件
@@ -260,7 +256,7 @@ set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=cn
-"set langmenu=zh_CN.UTF-8
+"set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
 " 下面这句只影响普通模式 (非图形界面) 下的 Vim
 set termencoding=utf-8
@@ -423,6 +419,10 @@ cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
+" 插入模式下的快速移动
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+
 
 " 搜索相关
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
@@ -570,8 +570,8 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 "==========================================
 
 " 具体编辑文件类型的一般设置，比如不要 tab 等
-autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType ruby,javascript,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
+autocmd FileType pjavascript,ython set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType ruby,html,css,xml set tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
 autocmd BufRead,BufNewFile *.md,*.mkd,*.markdown set filetype=markdown.mkd
 autocmd BufRead,BufNewFile *.part set filetype=html
 autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai
@@ -592,19 +592,53 @@ autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,pe
 
 
 " 定义函数AutoSetFileHead，自动插入文件头
-autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
+autocmd BufNewFile *.sh,*.py,*.c,*.cpp exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
     "如果文件类型为.sh文件
     if &filetype == 'sh'
         call setline(1, "\#!/bin/bash")
+        call append(1, "")
+        call append(2, "# *************************************************")
+        call append(3, "# Author       : aゞ小波")
+        call append(4, "# CreateTime   : ".strftime("%Y-%m-%d %H:%M"))
+        call append(5, "# Email        : 465728296@qq.com")
+        call append(6, "# Filename     : ".expand("%:t"))
+        call append(7, "# Description  :")
+        call append(8, "# *************************************************")
     endif
 
     "如果文件类型为python
     if &filetype == 'python'
         call setline(1, "\#!/usr/bin/env python")
-        call append(1, "\# encoding: utf-8")
-        " call setline(1, "\# -*- coding: utf-8 -*-")
+        call append(1, "\# -*- encoding: utf-8 -*-")
+        call append(2, "")
+        call append(3, "# *************************************************")
+        call append(4, "# Author       : aゞ小波")
+        call append(5, "# CreateTime   : ".strftime("%Y-%m-%d %H:%M"))
+        call append(6, "# Email        : 465728296@qq.com")
+        call append(7, "# Filename     : ".expand("%:t"))
+        call append(8, "# Description  :")
+        call append(9, "# *************************************************")
     endif
+
+    if &filetype == 'c'
+        call append(0, "/**************************************************")
+        call append(1, "*- Author       : aゞ小波")
+        call append(2, "*- CreateTime   : ".strftime("%Y-%m-%d %H:%M"))
+        call append(3, "*- Email        : 465728296@qq.com")
+        call append(4, "*- Filename     : ".expand("%:t"))
+        call append(5, "*- Description  :")
+        call append(6, "***************************************************/")
+        call append(7, "")
+        call append(8, "#include <stdio.h>")
+        call append(9, "#include <stdlib.h>")
+        call append(10, "")
+        call append(11, "int main(int argc, char ** argv){")
+        call append(12, "")
+        call append(13, "\texit(0);")
+        call append(14, "}")
+    endif
+
 
     normal G
     normal o
@@ -657,8 +691,8 @@ endif
 set background=dark
 set t_Co=256
 
-" colorscheme solarized
-colorscheme molokai
+colorscheme solarized
+" colorscheme molokai
 
 
 " 设置标记一列的背景颜色和数字一行颜色一致
