@@ -1,6 +1,10 @@
 "==========================================
-" Author:  xiaobo
+" Author:  wklken
 " Version: 9.1
+" Email: wklken@yeah.net
+" BlogPost: http://www.wklken.me
+" ReadMe: README.md
+" Donation: http://www.wklken.me/pages/donation.html
 " Last_modify: 2015-12-15
 " Sections:
 "       -> Initial Plugin 加载插件
@@ -691,8 +695,10 @@ endif
 set background=dark
 set t_Co=256
 
-colorscheme solarized
+" colorscheme solarized
 " colorscheme molokai
+colorscheme dracula
+" colorscheme seoul256
 
 
 " 设置标记一列的背景颜色和数字一行颜色一致
